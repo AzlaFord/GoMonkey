@@ -27,6 +27,7 @@ func (l *Lexer) readChar() {
 
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
+	l.skipWhiteSpace()
 	switch l.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, l.ch)
@@ -50,6 +51,7 @@ func (l *Lexer) NextToken() token.Token {
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
 		}
@@ -60,6 +62,7 @@ func (l *Lexer) NextToken() token.Token {
 }
 
 func (l *Lexer) readIdentifier() string {
+	// Citeste indetificatorul pana si avanseaza in pozitia lexerului pana da de un non-letter-character
 	position := l.position
 	for isLetter(l.ch) {
 		l.readChar()
@@ -75,4 +78,11 @@ func isLetter(ch byte) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 	// in go poti compara caractere din cauza ca se ia in cosiderearea valaorea lor ASCII deci
 	// daca as compara 'R' == "R" as compara defata daca  52 == 52
+}
+
+func (l *Lexer) skipWhiteSpace() {
+	// deci verifica daca nu e spatiu gol sau nu e linie noua sau nu e un tab r nu inteleg ce face ..
+	if l.ch == ' ' || l.ch == '\r' || l.ch == '\t' || l.ch == '\n' {
+		l.readChar()
+	}
 }
