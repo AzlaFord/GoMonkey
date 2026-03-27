@@ -94,12 +94,12 @@ func newToken(tokenType token.TokenType, ch byte) token.Token {
 func isLetter(ch byte) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 	// in go poti compara caractere din cauza ca se ia in cosiderearea valaorea lor ASCII deci
-	// daca as compara 'R' == "R" as compara defata daca  52 == 52
+	// daca as compara 'R' == 'R' as compara defata daca  82 == 82
 }
 
 func (l *Lexer) skipWhiteSpace() {
 	// deci verifica daca nu e spatiu gol sau nu e linie noua sau nu e un tab r nu inteleg ce face ..
-	if l.ch == ' ' || l.ch == '\r' || l.ch == '\t' || l.ch == '\n' {
+	if l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
 	}
 }
