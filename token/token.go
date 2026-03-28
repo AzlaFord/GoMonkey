@@ -33,6 +33,13 @@ const (
 	LBRACE = "{"
 	RBRACE = "}"
 
+	MINUS    = "-"
+	BANG     = "!"
+	ASTERISK = "*"
+	SLASH    = "/"
+	LT       = "<"
+	GT       = ">"
+
 	// Cuvinte cheie
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
